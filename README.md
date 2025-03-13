@@ -1,5 +1,7 @@
 # STORM: Simulated Trading Operations By Responsive Multi-agents
 
+
+
 A sophisticated simulation of an autonomous AI-powered trading ecosystem where hundreds of AI agents interact with each other and a marketplace to trade a custom token (STORM).
 
 
@@ -10,6 +12,12 @@ Project Storm creates a self-sustaining virtual economy where AI agents with uni
 
 This simulation demonstrates how AI agents can form emergent behaviors in financial markets, showcasing group dynamics, price discovery mechanisms, and social influence in trading.
 
+
+
+![Screenshot from 2025-03-10 21-39-37](https://github.com/user-attachments/assets/bc946ab3-9f3d-43d3-b2af-a00040f277b0)
+
+
+
 ## Key Features
 
 - **Autonomous AI Agents**: 500+ unique agents with different personalities, risk tolerances, and trading strategies
@@ -17,6 +25,14 @@ This simulation demonstrates how AI agents can form emergent behaviors in financ
 - **Agent Communication**: Agents share information and react to market movements through a public chat system
 - **Real-time Monitoring**: Visualization of market data, trading activities, and agent interactions
 - **Configurable Simulation**: Adjust parameters like number of agents, agent personalities, and simulation speed
+
+
+![Screenshot from 2025-03-13 20-11-53](https://github.com/user-attachments/assets/3dbcaaf1-9229-4494-9937-ecd0b043bca6)
+
+
+
+
+![Screenshot from 2025-03-13 20-11-08](https://github.com/user-attachments/assets/85843372-4a71-4852-845b-4bcde084339f)
 
 ## Tech Stack
 
