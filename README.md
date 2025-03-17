@@ -86,8 +86,8 @@ If you've never set up PostgreSQL before, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/project-storm.git
-   cd project-storm
+   git clone https://github.com/Alfaxad/storm.git
+   cd storm
    ```
 
 2. Install dependencies:
@@ -185,7 +185,7 @@ The complete schema is available in `prisma/schema.prisma`.
 │   ├── cache             # Caching utilities
 │   └── simulation        # Simulation engine
 ├── prisma                # Prisma schema and migrations
-├── scripts               # Utility scripts for setup
+├  
 │   ├── deploy-token-script.js  # Token deployment script
 │   └── setup-llm-agents.js     # Agent creation script
 └── public                # Static assets
