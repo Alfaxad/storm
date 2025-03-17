@@ -1,10 +1,6 @@
 # STORM: Simulated Trading Operations By Responsive Multi-agents
 
-
-
 A sophisticated simulation of an autonomous AI-powered trading ecosystem where hundreds of AI agents interact with each other and a marketplace to trade a custom token (STORM).
-
-
 
 ## Overview
 
@@ -12,11 +8,7 @@ Project Storm creates a self-sustaining virtual economy where AI agents with uni
 
 This simulation demonstrates how AI agents can form emergent behaviors in financial markets, showcasing group dynamics, price discovery mechanisms, and social influence in trading.
 
-
-
 ![Screenshot from 2025-03-10 21-39-37](https://github.com/user-attachments/assets/bc946ab3-9f3d-43d3-b2af-a00040f277b0)
-
-
 
 ## Key Features
 
@@ -26,11 +18,7 @@ This simulation demonstrates how AI agents can form emergent behaviors in financ
 - **Real-time Monitoring**: Visualization of market data, trading activities, and agent interactions
 - **Configurable Simulation**: Adjust parameters like number of agents, agent personalities, and simulation speed
 
-
 ![Screenshot from 2025-03-13 20-11-53](https://github.com/user-attachments/assets/3dbcaaf1-9229-4494-9937-ecd0b043bca6)
-
-
-
 
 ![Screenshot from 2025-03-13 20-11-08](https://github.com/user-attachments/assets/85843372-4a71-4852-845b-4bcde084339f)
 
@@ -53,7 +41,48 @@ This simulation demonstrates how AI agents can form emergent behaviors in financ
 - PostgreSQL database
 - OpenAI API key
 
-### Setup
+### PostgreSQL Setup (First-time Users)
+
+If you've never set up PostgreSQL before, follow these steps:
+
+1. **Install PostgreSQL**:
+   
+   - **Ubuntu/Debian**:
+     ```bash
+     sudo apt update
+     sudo apt install postgresql postgresql-contrib
+     ```
+   
+   - **macOS** (using Homebrew):
+     ```bash
+     brew install postgresql
+     brew services start postgresql
+     ```
+   
+   - **Windows**: Download and install from [PostgreSQL website](https://www.postgresql.org/download/windows/)
+
+2. **Create a Database**:
+   
+   ```bash
+   # Log in as postgres user
+   sudo -u postgres psql
+   
+   # Inside psql, create a database and user
+   CREATE DATABASE project_storm;
+   CREATE USER stormuser WITH ENCRYPTED PASSWORD 'your_password';
+   GRANT ALL PRIVILEGES ON DATABASE project_storm TO stormuser;
+   
+   # Exit psql
+   \q
+   ```
+
+3. **Test Connection**: 
+   ```bash
+   psql -U stormuser -d project_storm -h localhost
+   # Enter your password when prompted
+   ```
+
+### Project Setup
 
 1. Clone the repository:
    ```bash
@@ -71,15 +100,49 @@ This simulation demonstrates how AI agents can form emergent behaviors in financ
 3. Set up environment variables:
    Create a `.env.local` file in the root directory with:
    ```
-   DATABASE_URL=postgresql://username:password@localhost:5432/project_storm
+   DATABASE_URL=postgresql://stormuser:your_password@localhost:5432/project_storm
    OPENAI_API_KEY=your_openai_api_key
    NEXT_PUBLIC_RPC_URL=http://localhost:8899
    ```
 
-4. Set up the database:
+4. Set up the database with Prisma:
    ```bash
-   npx prisma migrate dev
+   # Generate Prisma client
+   npx prisma generate
+   
+   # Create initial database structure
+   npx prisma migrate dev --name init
    ```
+
+### Deploy Trading Token and Setup Agents
+
+Before running the simulation, you need to deploy the trading token and create agents:
+
+1. **Deploy Trading Token**:
+   ```bash
+   # This creates the STORM token on the simulated blockchain
+   node deploy-token-script.js
+   ```
+
+2. **Create LLM Agents**:
+   ```bash
+   # Create 50 AI agents with various personalities
+   node setup-llm-agents.js 50
+   ```
+
+   You can adjust the number of agents (50 in this example) based on your system's capacity.
+
+## Prisma Schema
+
+The project uses Prisma ORM to manage the database. Key models include:
+
+- `Agent`: Stores agent information, personalities, and balances
+- `Transaction`: Records all trading activity
+- `Message`: Stores inter-agent communications
+- `PoolState`: Tracks the AMM liquidity pool state
+- `MarketState`: Records historical market data
+
+The complete schema is available in `prisma/schema.prisma`.
 
 ## Running the Simulation
 
@@ -122,8 +185,20 @@ This simulation demonstrates how AI agents can form emergent behaviors in financ
 │   ├── cache             # Caching utilities
 │   └── simulation        # Simulation engine
 ├── prisma                # Prisma schema and migrations
+├── scripts               # Utility scripts for setup
+│   ├── deploy-token-script.js  # Token deployment script
+│   └── setup-llm-agents.js     # Agent creation script
 └── public                # Static assets
 ```
+
+## Troubleshooting
+
+Common issues and solutions:
+
+- **Database Connection Errors**: Ensure PostgreSQL is running and credentials are correct in `.env.local`
+- **Token Deployment Fails**: Check that your RPC URL is correct and accessible
+- **Agent Creation Issues**: Verify your OpenAI API key is valid and has sufficient quota
+- **UI Shows No Data**: Use the refresh button on the dashboard to force data synchronization
 
 ## Simulation Details
 
@@ -168,5 +243,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgements
 
-- [SendAI](https://sendai.fun/) for the Solana AI agent toolkit inspiration
-
+- [SendAI](https://sendai.fun/) for the Solana AI agent toolkit.
